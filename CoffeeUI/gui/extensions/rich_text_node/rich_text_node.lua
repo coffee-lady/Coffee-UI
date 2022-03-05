@@ -1,6 +1,6 @@
-local richtext = require('richtext.richtext')
-
+local richtext = require('CoffeeUI.richtext.richtext')
 local Libs = require('CoffeeUI.libs.libs')
+
 local Array = Libs.array
 
 --- @class RichTextNode
