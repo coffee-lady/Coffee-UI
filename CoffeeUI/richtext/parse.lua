@@ -1,43 +1,43 @@
-local color = require "richtext.color"
-local utf8 = require("richtext.utf8")
+local color = require 'CoffeeUI.richtext.color'
+local utf8 = require('CoffeeUI.richtext.utf8')
 
 local M = {}
 
 local function parse_tag(tag, params)
-	local settings = { tags = { [tag] = params }, tag = tag }
-	if tag == "color" then
+	local settings = {tags = {[tag] = params}, tag = tag}
+	if tag == 'color' then
 		settings.color = color.parse(params)
-	elseif tag == "shadow" then
+	elseif tag == 'shadow' then
 		settings.shadow = color.parse(params)
-	elseif tag == "outline" then
+	elseif tag == 'outline' then
 		settings.outline = color.parse(params)
-	elseif tag == "font" then
+	elseif tag == 'font' then
 		settings.font = params
-	elseif tag == "size" then
+	elseif tag == 'size' then
 		settings.size = tonumber(params)
-	elseif tag == "b" then
+	elseif tag == 'b' then
 		settings.bold = true
-	elseif tag == "i" then
+	elseif tag == 'i' then
 		settings.italic = true
-	elseif tag == "a" then
+	elseif tag == 'a' then
 		settings.anchor = true
-	elseif tag == "br" then
+	elseif tag == 'br' then
 		settings.linebreak = true
-	elseif tag == "img" then
-		local texture, anim = params:match("(.-):(.*)")
+	elseif tag == 'img' then
+		local texture, anim = params:match('(.-):(.*)')
 		settings.image = {
 			texture = texture,
 			anim = anim
 		}
-	elseif tag == "spine" then
-		local scene, anim = params:match("(.-):(.*)")
+	elseif tag == 'spine' then
+		local scene, anim = params:match('(.-):(.*)')
 		settings.spine = {
 			scene = scene,
 			anim = anim
 		}
-	elseif tag == "nobr" then
+	elseif tag == 'nobr' then
 		settings.nobr = true
-	elseif tag == "p" then
+	elseif tag == 'p' then
 		settings.paragraph = tonumber(params) or true
 	else
 		settings[tag] = params
@@ -46,32 +46,30 @@ local function parse_tag(tag, params)
 	return settings
 end
 
-
 -- add a single word to the list of words
 local function add_word(text, settings, words)
 	-- handle HTML entities
-	text = text:gsub("&lt;", "<"):gsub("&gt;", ">"):gsub("&nbsp;", " ")
+	text = text:gsub('&lt;', '<'):gsub('&gt;', '>'):gsub('&nbsp;', ' ')
 
-	local data = { text = text }
-	for k,v in pairs(settings) do
+	local data = {text = text}
+	for k, v in pairs(settings) do
 		data[k] = v
 	end
 	words[#words + 1] = data
 end
-
 
 -- split a line into words
 local function split_line(line, settings, words)
 	assert(line)
 	assert(settings)
 	assert(words)
-	local ws_start, trimmed_text, ws_end = line:match("^(%s*)(.-)(%s*)$")
-	if trimmed_text == "" then
+	local ws_start, trimmed_text, ws_end = line:match('^(%s*)(.-)(%s*)$')
+	if trimmed_text == '' then
 		add_word(ws_start .. ws_end, settings, words)
 	else
 		local wi = #words
-		for word in trimmed_text:gmatch("%S+") do
-			add_word(word .. " ", settings, words)
+		for word in trimmed_text:gmatch('%S+') do
+			add_word(word .. ' ', settings, words)
 		end
 		local first = words[wi + 1]
 		first.text = ws_start .. first.text
@@ -80,7 +78,6 @@ local function split_line(line, settings, words)
 	end
 end
 
-
 -- split text
 -- split by lines first
 local function split_text(text, settings, words)
@@ -88,23 +85,23 @@ local function split_text(text, settings, words)
 	assert(settings)
 	assert(words)
 	-- special treatment of empty text with a linebreak <br/>
-	if text == "" and settings.linebreak then
+	if text == '' and settings.linebreak then
 		add_word(text, settings, words)
 		return
 	end
 
 	-- we don't want to deal with \r\n, remove all \r
-	text = text:gsub("\r", "")
+	text = text:gsub('\r', '')
 
 	-- the Lua pattern expects the text to have a linebreak at the end
 	local added_linebreak = false
-	if text:sub(-1)~="\n" then
+	if text:sub(-1) ~= '\n' then
 		added_linebreak = true
-		text = text .. "\n"
+		text = text .. '\n'
 	end
 
 	-- split into lines
-	for line in text:gmatch("(.-)\n") do
+	for line in text:gmatch('(.-)\n') do
 		split_line(line, settings, words)
 		-- flag last word of a line as having a linebreak
 		local last = words[#words]
@@ -120,13 +117,13 @@ end
 
 -- merge one tag into another
 local function merge_tags(dst, src)
-	for k,v in pairs(src) do
-		if k ~= "tags" then
+	for k, v in pairs(src) do
+		if k ~= 'tags' then
 			dst[k] = v
 		end
 	end
-	for tag,params in pairs(src.tags or {}) do
-		dst.tags[tag] = (params == "") and true or params
+	for tag, params in pairs(src.tags or {}) do
+		dst.tags[tag] = (params == '') and true or params
 	end
 end
 
@@ -138,47 +135,47 @@ function M.parse(text, default_settings)
 	assert(text)
 	assert(default_settings)
 
-	text = text:gsub("&zwsp;", "<zwsp>\226\128\139</zwsp>")
+	text = text:gsub('&zwsp;', '<zwsp>\226\128\139</zwsp>')
 	local all_words = {}
 	local open_tags = {}
 	while true do
 		-- merge list of word settings from defaults and all open tags
-		local word_settings = { tags = {}}
+		local word_settings = {tags = {}}
 		merge_tags(word_settings, default_settings)
-		for _,open_tag in ipairs(open_tags) do
+		for _, open_tag in ipairs(open_tags) do
 			merge_tags(word_settings, open_tag)
 		end
 
 		-- find next tag, with the text before and after the tag
-		local before_tag, tag, after_tag = text:match("(.-)(</?%S->)(.*)")
+		local before_tag, tag, after_tag = text:match('(.-)(</?%S->)(.*)')
 
 		-- no more tags, split and add rest of the text
 		if not before_tag or not tag or not after_tag then
-			if text ~= "" then
+			if text ~= '' then
 				split_text(text, word_settings, all_words)
 			end
 			break
 		end
 
 		-- split and add text before the encountered tag
-		if before_tag ~= "" then
+		if before_tag ~= '' then
 			split_text(before_tag, word_settings, all_words)
 		end
 
 		-- parse the tag, split into name and optional parameters
-		local endtag, name, params, empty = tag:match("<(/?)(%a+)=?(%S-)(/?)>")
+		local endtag, name, params, empty = tag:match('<(/?)(%a+)=?(%S-)(/?)>')
 
-		local is_endtag = endtag == "/"
-		local is_empty = empty == "/"
+		local is_endtag = endtag == '/'
+		local is_empty = empty == '/'
 		if is_empty then
 			-- empty tag, ie tag without content
 			-- example <br/> and <img=texture:image/>
 			local empty_tag_settings = parse_tag(name, params)
 			merge_tags(empty_tag_settings, word_settings)
-			add_word("", empty_tag_settings, all_words)
+			add_word('', empty_tag_settings, all_words)
 		elseif not is_endtag then
-			if name == "repeat" then
-				local text_to_repeat = after_tag:match("(.*)</repeat>")
+			if name == 'repeat' then
+				local text_to_repeat = after_tag:match('(.*)</repeat>')
 				local repetitions = tonumber(params)
 				if repetitions > 1 then
 					after_tag = text_to_repeat:rep(repetitions - 1) .. after_tag
@@ -189,21 +186,23 @@ function M.parse(text, default_settings)
 				open_tags[#open_tags + 1] = tag_settings
 			end
 		else
-			if name ~= "repeat" then
+			if name ~= 'repeat' then
 				-- end tag - remove it from the list of open tags
 				local found = false
-				for i=#open_tags,1,-1 do
+				for i = #open_tags, 1, -1 do
 					if open_tags[i].tag == name then
 						table.remove(open_tags, i)
 						found = true
 						break
 					end
 				end
-				if not found then print(("Found end tag '%s' without matching start tag"):format(name)) end
+				if not found then
+					print(("Found end tag '%s' without matching start tag"):format(name))
+				end
 			end
 		end
 
-		if name == "p" then
+		if name == 'p' then
 			local last_word = all_words[#all_words]
 			if last_word then
 				if not is_endtag then
@@ -223,7 +222,7 @@ end
 
 --- Get the length of a text, excluding any tags (except image and spine tags)
 function M.length(text)
-	return utf8.len(text:gsub("<img.-/>", " "):gsub("<spine.-/>", " "):gsub("<.->", ""))
+	return utf8.len(text:gsub('<img.-/>', ' '):gsub('<spine.-/>', ' '):gsub('<.->', ''))
 end
 
 return M
