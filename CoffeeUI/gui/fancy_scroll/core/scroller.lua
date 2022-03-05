@@ -2,8 +2,9 @@ local Core = require('CoffeeUI.gui.core.core')
 local Event = require('CoffeeUI.gui.fancy_scroll.helper.event.event')
 local AutoscrollHelper = require('CoffeeUI.gui.fancy_scroll.helper.autoscroll_helper')
 local Easing = require('CoffeeUI.gui.fancy_scroll.helper.easing_func')
+local Libs = require('CoffeeUI.libs.libs')
+local Math = Libs.math
 
-local Math = require('CoffeeUI.libs.math.math')
 local Node = Core.Node
 
 local Scroller = class('Scroller')

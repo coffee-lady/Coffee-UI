@@ -1,6 +1,7 @@
 local BaseLayout = require('CoffeeUI.gui.core.layouts.BaseLayout')
 
-local Array = require('CoffeeUI.libs.types.array.array')
+local Libs = require('CoffeeUI.libs.libs')
+local Array = Libs.array
 
 --- @class VerticalLayout : BaseLayout
 local VerticalLayout = class('VerticalLayout', BaseLayout)

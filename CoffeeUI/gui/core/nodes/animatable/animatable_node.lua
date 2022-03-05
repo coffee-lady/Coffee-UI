@@ -1,7 +1,8 @@
 local GUINode = require('CoffeeUI.gui.core.nodes.node.node')
 
-local Easings = require('CoffeeUI.libs.easings.easings')
-local Math = require('CoffeeUI.libs.math.math')
+local Libs = require('CoffeeUI.libs.libs')
+local Math = Libs.math
+local Easings = Libs.easings
 
 local Animations = require('CoffeeUI.animations.animations')
 local TweenGUI = require('CoffeeUI.animations.tween.tween_gui')

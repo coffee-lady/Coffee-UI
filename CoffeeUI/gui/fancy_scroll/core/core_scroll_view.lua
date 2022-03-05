@@ -1,6 +1,7 @@
 local Event = require('CoffeeUI.gui.fancy_scroll.helper.event.event')
 
-local Math = require('CoffeeUI.libs.math.math')
+local Libs = require('CoffeeUI.libs.libs')
+local Math = Libs.math
 
 --- @class CoreScrollView
 local CoreScrollView = class('CoreScrollView')

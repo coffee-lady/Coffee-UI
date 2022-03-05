@@ -1,4 +1,5 @@
-local Easings = require('CoffeeUI.libs.easings.easings')
+local Libs = require('CoffeeUI.libs.libs')
+local Easings = Libs.easings
 
 local TweenGO = require('CoffeeUI.animations.tween.tween_go')
 local ExecutorBase = require('CoffeeUI.animations.executor.executor_base')
