@@ -1,5 +1,5 @@
-local Selector = require('CoffeeUI.libs.tools.easings.selector.selector')
-local Binds = require('CoffeeUI.libs.tools.easings.bind.bind')
+local Selector = require('CoffeeUI.libs.easings.selector.selector')
+local Binds = require('CoffeeUI.libs.easings.bind.bind')
 
 local EasingsLib = {}
 

@@ -1,6 +1,6 @@
 local BaseLayout = require('CoffeeUI.gui.core.layouts.BaseLayout')
 
-local Math = require('CoffeeUI.libs.tools.math.math')
+local Math = require('CoffeeUI.libs.math.math')
 
 --- @class GridLayout : BaseLayout
 local GridLayout = class('GridLayout', BaseLayout)

@@ -1,4 +1,4 @@
-local Math = require('CoffeeUI.libs.tools.math.math')
+local Math = require('CoffeeUI.libs.math.math')
 local Animations = require('CoffeeUI.animations.animations')
 local AbstractButton = require('CoffeeUI.gui.controls.abstract_button.abstract_button')
 

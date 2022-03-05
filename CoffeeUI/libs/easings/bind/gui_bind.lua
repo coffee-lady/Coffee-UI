@@ -1,4 +1,4 @@
-local EasingFunc = require('CoffeeUI.libs.tools.easings.functions.functions')
+local EasingFunc = require('CoffeeUI.libs.easings.functions.functions')
 
 return {
     [gui.EASING_INBACK] = EasingFunc.in_back,

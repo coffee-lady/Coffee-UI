@@ -1,6 +1,6 @@
 local BaseLayout = require('CoffeeUI.gui.core.layouts.BaseLayout')
 
-local Array = require('CoffeeUI.libs.tools.types.array.array')
+local Array = require('CoffeeUI.libs.types.array.array')
 
 --- @class LandscapeLayout : BaseLayout
 local LandscapeLayout = class('LandscapeLayout', BaseLayout)

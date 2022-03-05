@@ -1,7 +1,7 @@
 local Core = require('CoffeeUI.gui.core.core')
 local Event = require('CoffeeUI.gui.fancy_scroll.helper.event.event')
 
-local Math = require('CoffeeUI.libs.tools.math.math')
+local Math = require('CoffeeUI.libs.math.math')
 local Node = Core.Node
 
 local BaseScrollbar = class('BaseScrollbar', Node)

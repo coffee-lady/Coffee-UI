@@ -1,5 +1,5 @@
-local EasingFunc = require('CoffeeUI.libs.tools.easings.functions.functions')
-local class = require('CoffeeUI.libs.tools.middleclass.middleclass')
+local EasingFunc = require('CoffeeUI.libs.easings.functions.functions')
+local class = require('CoffeeUI.libs.middleclass.middleclass')
 
 --- @class EasingSelector
 local EasingSelector = class('EasingSelector')
