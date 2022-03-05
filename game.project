@@ -15,5 +15,5 @@ input_method = HiddenInputField
 title = Coffee UI
 
 [library]
-include_dirs = gui animations
+include_dirs = CoffeeUI
 
