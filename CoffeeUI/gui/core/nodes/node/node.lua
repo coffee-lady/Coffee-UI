@@ -281,14 +281,6 @@ function Node:is_enabled()
     return gui.is_enabled(self.target)
 end
 
-function Node:get_screen_position()
-    if not self.target then
-        return
-    end
-
-    return gui.get_screen_position(self.target)
-end
-
 function Node:set_alpha(alpha)
     if not self.target then
         return
