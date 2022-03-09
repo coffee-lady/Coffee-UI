@@ -46,7 +46,8 @@ function RichTextNode:initialize(id, settings)
     self.settings = settings and Array.copy_1d(settings) or Array.copy_1d(RichTextNode.DEFAULT_SETTINGS)
 
     self.settings.align = self.settings.align or RichTextNode.ALIGN_CENTER
-    self.settings.parent = self.target or RichTextNode.VALIGN_MIDDLE
+    self.settings.valign = self.settings.valign or RichTextNode.VALIGN_MIDDLE
+    self.settings.parent = self.target
 
     if self.settings.combine_words == nil then
         self.settings.combine_words = true
@@ -70,13 +71,20 @@ function RichTextNode:set_color(color)
     self.settings.color = color
 
     if self.text then
-        self:_update_text()
+        self:_update_nodes_color()
     end
 end
 
 function RichTextNode:_update_text()
     self:clear()
     self.nodes, self.text_metrics = richtext.create(self.text, self.settings.initial_font, self.settings)
+    self:_update_nodes_color()
+end
+
+function RichTextNode:_update_nodes_color()
+    for _, node_data in pairs(self.nodes) do
+        gui.set_color(node_data.node, self.settings.color)
+    end
 end
 
 function RichTextNode:clear()
@@ -89,7 +97,6 @@ function RichTextNode:clear()
     end
 
     self.nodes = nil
-    self.text = ''
 end
 
 function RichTextNode.static:set_default_settings(settings)
