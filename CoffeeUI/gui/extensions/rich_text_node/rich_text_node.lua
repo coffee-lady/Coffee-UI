@@ -75,7 +75,21 @@ function RichTextNode:set_color(color)
 end
 
 function RichTextNode:_update_text()
+    self:clear()
     self.nodes, self.text_metrics = richtext.create(self.text, self.settings.initial_font, self.settings)
+end
+
+function RichTextNode:clear()
+    if not self.nodes then
+        return
+    end
+
+    for _, node_data in pairs(self.nodes) do
+        gui.delete_node(node_data.node)
+    end
+
+    self.nodes = nil
+    self.text = ''
 end
 
 function RichTextNode.static:set_default_settings(settings)
