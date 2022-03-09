@@ -141,6 +141,14 @@ function Node:get_screen_pos()
     return gui.get_screen_position(self.target)
 end
 
+function Node:set_screen_pos(value)
+    if not self.target then
+        return
+    end
+
+    gui.set_screen_position(self.target, value)
+end
+
 function Node:set_size(size)
     if not self.target then
         return

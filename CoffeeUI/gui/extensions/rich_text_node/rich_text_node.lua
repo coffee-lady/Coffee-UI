@@ -1,10 +1,11 @@
 local richtext = require('CoffeeUI.richtext.richtext')
 local Libs = require('CoffeeUI.libs.libs')
+local Node = require('CoffeeUI.gui.core.nodes.node.node')
 
 local Array = Libs.array
 
 --- @class RichTextNode
-local RichTextNode = class('RichTextNode')
+local RichTextNode = class('RichTextNode', Node)
 
 RichTextNode.ALIGN_LEFT = richtext.ALIGN_LEFT
 RichTextNode.ALIGN_CENTER = richtext.ALIGN_CENTER
@@ -39,6 +40,8 @@ function RichTextNode:initialize(id, settings)
     -- }
 
     self.target = type(id) == 'string' and gui.get_node(id) or id
+
+    Node.initialize(self, self.target)
 
     self.settings = settings and Array.copy_1d(settings) or Array.copy_1d(RichTextNode.DEFAULT_SETTINGS)
 
