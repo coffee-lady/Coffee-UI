@@ -58,11 +58,11 @@ function CoreScrollView:update_items(items)
         self.scroller.scrollbar:set_percentage(self.scroller.bottom_offset / (#items - 1))
     end
 
-    self:refresh()
+    self:refresh(true)
 end
 
-function CoreScrollView:refresh()
-    self:update_position(self.current_position)
+function CoreScrollView:refresh(force_refresh)
+    self:update_position(self.current_position, force_refresh)
 end
 
 function CoreScrollView:get_count()
