@@ -248,6 +248,23 @@ function Node:get_color()
     return gui.get_color(self.target)
 end
 
+function Node:set_slice9(value)
+    if not self.target then
+        return
+    end
+
+    gui.set_slice9(self.target, value)
+    return self
+end
+
+function Node:get_slice9()
+    if not self.target then
+        return
+    end
+
+    return gui.get_slice9(self.target)
+end
+
 function Node:is_picked(action)
     if not self.target then
         return
