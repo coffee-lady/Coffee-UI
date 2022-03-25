@@ -15,8 +15,8 @@ function PieNode:get_actual_size()
     local sizes = self:get_size()
     local scale = self:get_scale()
 
-    sizes.x = sizes.x * scale.x
-    sizes.y = sizes.y * scale.y
+    sizes.x = sizes.x * math.abs(scale.x)
+    sizes.y = sizes.y * math.abs(scale.y)
 
     return sizes
 end

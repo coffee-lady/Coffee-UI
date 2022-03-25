@@ -26,8 +26,8 @@ function TextNode:get_actual_size()
     local scale = self:get_scale()
 
     local sizes = vmath.vector3()
-    sizes.x = metrics.width * scale.x
-    sizes.y = metrics.height * scale.y
+    sizes.x = metrics.width * math.abs(scale.x)
+    sizes.y = metrics.height * math.abs(scale.y)
 
     return sizes
 end
