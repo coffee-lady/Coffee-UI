@@ -116,6 +116,15 @@ function Node:set_rotation(rotation)
     return self
 end
 
+function Node:set_rotation_z(rotation_z)
+    if not self.target then
+        return
+    end
+
+    gui.set_rotation(self.target, vmath.vector3(0, 0, rotation_z))
+    return self
+end
+
 function Node:get_rotation()
     if not self.target then
         return
@@ -155,6 +164,24 @@ function Node:set_size(size)
     end
 
     gui.set_size(self.target, size)
+    return self
+end
+
+function Node:move_above(node)
+    if not self.target then
+        return
+    end
+
+    gui.move_above(self.target, node and node.target or nil)
+    return self
+end
+
+function Node:move_below(node)
+    if not self.target then
+        return
+    end
+
+    gui.move_below(self.target, node and node.target or nil)
     return self
 end
 

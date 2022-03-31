@@ -80,6 +80,17 @@ function RichTextNode:_update_text()
     self.nodes, self.text_metrics = richtext.create(self.text, self.settings.initial_font, self.settings)
 end
 
+function RichTextNode:update_colors_manually()
+    if not self.nodes then
+        return
+    end
+
+    for _, node_data in pairs(self.nodes) do
+        print(node_data.node, self.settings.color)
+        gui.set_color(node_data.node, self.settings.color)
+    end
+end
+
 function RichTextNode:clear()
     if not self.nodes then
         return
