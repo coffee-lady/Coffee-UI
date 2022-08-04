@@ -28,7 +28,13 @@ end
 
 function LocalizationMap:localize(data)
     local text_data = self.localization_service:get(self.texts_key, data.vars)
-    data.object:set_text(text_data[data.key])
+    local text = text_data[data.key];
+
+    if data.fit then
+        data.object:set_fit_text(text)
+    else
+        data.object:set_text(text)
+    end
 end
 
 function LocalizationMap:refresh()
